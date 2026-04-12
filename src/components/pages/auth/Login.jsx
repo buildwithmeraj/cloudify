@@ -49,7 +49,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const res = await api.post("/auth/login", { email, password });
+      const res = await api.post("/api/auth/login", { email, password });
       await login(res.data.token);
       router.replace("/dashboard");
     } catch (err) {
@@ -61,7 +61,10 @@ export default function LoginPage() {
 
   const handleGoogleLogin = () => {
     setIsGoogleLoading(true);
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google/redirect`;
+    const apiUrl = (
+      process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+    ).replace(/\/+$/, "");
+    window.location.href = `${apiUrl}/auth/google/redirect`;
   };
 
   return (

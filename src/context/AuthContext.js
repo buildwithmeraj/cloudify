@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
 
   const fetchUser = async () => {
     try {
-      const res = await api.get("/user");
+      const res = await api.get("/api/user");
       setUser(res.data);
     } catch {
       deleteCookie("auth_token");
@@ -55,7 +55,7 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     try {
-      await api.post("/logout");
+      await api.post("/api/logout");
     } finally {
       deleteCookie("auth_token");
       setToken(null);
