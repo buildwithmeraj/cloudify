@@ -43,7 +43,7 @@ const AddCloudinaryKey = () => {
         key: apiKey,
       });
       setSuccess("Cloudinary account added successfully.");
-      setTimeout(() => router.replace("/dashboard"), 1000);
+      setTimeout(() => router.replace("/dashboard/keys/cloudinary"), 1000);
     } catch (err) {
       const errors = err.response?.data?.errors;
       if (errors) {

@@ -28,12 +28,10 @@ const Dashboard = () => {
         cloudinaryKeys.map((cloudinaryKey) => {
           return <p key={cloudinaryKey.key}>{cloudinaryKey.key}</p>;
         })}
-      <Link href="/dashboard/add-cloudinary-key" className="btn btn-primary">
-        Add Cloudinary
+      <Link href="/dashboard/keys" className="btn btn-primary">
+        Keys
       </Link>
-      <Link href="/dashboard/add-public-key" className="btn btn-primary">
-        Add Public
-      </Link>
+
       <button onClick={logout} className="mt-12 btn">
         Logout
       </button>
