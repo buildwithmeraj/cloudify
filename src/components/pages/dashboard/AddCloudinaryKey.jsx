@@ -27,6 +27,7 @@ const AddCloudinaryKey = () => {
 
   const [cloudName, setCloudName] = useState("");
   const [apiKey, setApiKey] = useState("");
+  const [apiSecret, setApiSecret] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +42,7 @@ const AddCloudinaryKey = () => {
       await api.post("/api/keys/cloudinary", {
         name: cloudName,
         key: apiKey,
+        secret: apiSecret,
       });
       setSuccess("Cloudinary account added successfully.");
       setTimeout(() => router.replace("/dashboard/keys/cloudinary"), 1000);
@@ -95,10 +97,25 @@ const AddCloudinaryKey = () => {
               </span>
               <input
                 type="text"
-                placeholder="k0NfDU3mpaq7FMkgHIA9uAO-6Tk"
+                placeholder="612951342803327"
                 className="input input-bordered w-full text-sm focus:outline-none focus:border-primary"
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
+                required
+                autoComplete="off"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <span className="label-text font-semibold inline-flex items-center gap-2 text-base-content">
+                API Secret
+              </span>
+              <input
+                type="text"
+                placeholder="Dt5gMnasYB5HhGl1g9e2ENzKbNU"
+                className="input input-bordered w-full text-sm focus:outline-none focus:border-primary"
+                value={apiSecret}
+                onChange={(e) => setApiSecret(e.target.value)}
                 required
                 autoComplete="off"
               />

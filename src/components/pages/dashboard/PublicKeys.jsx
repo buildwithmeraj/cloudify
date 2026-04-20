@@ -87,7 +87,7 @@ const PublicKeys = () => {
           <FiCloud size={22} className="text-primary" />
           <h2 className="text-xl font-bold text-base-content">Public Keys</h2>
         </div>
-        <Link href="/dashboard/keys/cloudinary/add">Add Key</Link>
+        <Link href="/dashboard/keys/public/add">Add Key</Link>
       </div>
 
       {error && (

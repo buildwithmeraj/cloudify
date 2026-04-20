@@ -19,6 +19,7 @@ const CloudinaryKeys = () => {
   const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState("");
   const [editKey, setEditKey] = useState("");
+  const [editSecret, setEditSecret] = useState("");
   const [editLoading, setEditLoading] = useState(false);
 
   // delete state
@@ -105,6 +106,7 @@ const CloudinaryKeys = () => {
               <th>#</th>
               <th>Name</th>
               <th>API Key</th>
+              <th>API Secret</th>
               <th className="text-right">Actions</th>
             </tr>
           </thead>
@@ -154,6 +156,16 @@ const CloudinaryKeys = () => {
                           disabled
                         />
                       </td>
+                      <td>
+                        <input
+                          type="text"
+                          className="input input-bordered input-sm w-full max-w-40"
+                          value={editSecret}
+                          onChange={(e) => setEditSecret(e.target.value)}
+                          placeholder="Secrets can't be edited"
+                          disabled
+                        />
+                      </td>
                       <td className="text-right">
                         <div className="flex justify-end gap-2">
                           <button
@@ -182,6 +194,9 @@ const CloudinaryKeys = () => {
                       <td className="font-medium">{item.name}</td>
                       <td className="font-mono text-sm text-base-content/60">
                         {maskKey(item.key)}
+                      </td>
+                      <td className="font-mono text-sm text-base-content/60">
+                        {maskKey(item.secret)}
                       </td>
                       <td className="text-right">
                         <div className="flex justify-end gap-2">
@@ -212,7 +227,6 @@ const CloudinaryKeys = () => {
         </table>
       </div>
 
-      {/* Delete Confirmation Modal */}
       <div className={`modal ${confirmDeleteId ? "modal-open" : ""}`}>
         <div className="modal-box">
           <h3 className="font-bold text-lg">Confirm Delete</h3>
