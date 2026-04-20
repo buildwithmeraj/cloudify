@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import { Montserrat } from "next/font/google";
+import Providers from "./providers/Providers";
 
 export const metadata = {
   title: "Cloudify",
@@ -17,15 +18,17 @@ const montserrat = Montserrat({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${montserrat.className} flex flex-col min-h-screen`}>
-        <header>
-          <Navbar />
-        </header>
-        <main className="grow">
-          <AuthProvider>{children}</AuthProvider>
-        </main>
-        <Footer />
+        <Providers>
+          <AuthProvider>
+            <header>
+              <Navbar />
+            </header>
+            <main className="grow max-w-7xl and mx-auto">{children}</main>
+            <Footer />
+          </AuthProvider>
+        </Providers>
       </body>
     </html>
   );
