@@ -53,13 +53,17 @@ export function AuthProvider({ children }) {
     await fetchUser();
   };
 
-  const logout = async () => {
+  const logout = async ({ redirectToLogin = true } = {}) => {
     try {
       await api.post("/api/logout");
     } finally {
       deleteCookie("auth_token");
       setToken(null);
       setUser(null);
+      setLoading(false);
+      if (redirectToLogin && typeof window !== "undefined") {
+        window.location.replace("/login");
+      }
     }
   };
 

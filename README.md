@@ -5,7 +5,7 @@ It is designed to support multiple file providers, with **Cloudinary supported c
 
 ## Live URL
 
-- https://cloudify.meraj.pro
+- https://cloudify-delta.vercel.app/
 
 ## Backend Repo
 
