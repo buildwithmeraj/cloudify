@@ -7,7 +7,7 @@ import Providers from "./providers/Providers";
 
 export const metadata = {
   title: "Cloudify",
-  description: "Cloudinary proxy and manager",
+  description: "Multi-provider media manager (currently supports Cloudinary)",
 };
 
 const montserrat = Montserrat({

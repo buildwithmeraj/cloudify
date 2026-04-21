@@ -2,32 +2,32 @@ const features = [
   {
     title: "Cloudinary File Explorer",
     description:
-      "See your uploaded assets and manage your media workflow from one screen.",
+      "Browse uploaded assets, inspect URLs, and keep file operations inside one focused page.",
   },
   {
     title: "Key Management",
     description:
-      "Save Cloudinary and public keys with a structure designed for real projects.",
+      "Organize Cloudinary credentials and public keys with names that map to your project buckets.",
   },
   {
     title: "Authentication Included",
     description:
-      "Built-in login and registration keep each user’s dashboard isolated.",
+      "Built-in auth keeps user dashboards isolated while still allowing public-key based file API flows.",
   },
   {
     title: "Fast Developer Flow",
     description:
-      "Use fewer tools and context switches when handling uploads and asset links.",
+      "Reduce context switching between dashboard setup, API testing, and content delivery steps.",
   },
   {
-    title: "Clean Dashboard UX",
+    title: "Provider-Ready Dashboard",
     description:
-      "Straightforward pages for keys and files so onboarding is quick for any team.",
+      "Files and keys areas are structured for future providers such as Cloudflare R2.",
   },
   {
     title: "Ready for Growth",
     description:
-      "A practical foundation you can extend with analytics, teams, and automation.",
+      "Use this as a practical base for analytics, teams, audit logs, and automation features.",
   },
 ];
 
@@ -40,7 +40,8 @@ const FeaturesSection = () => {
             What You Can Do
           </h2>
           <p className="mt-2 max-w-2xl text-base-content/70">
-            Cloudify gives you the essentials needed to work confidently with media.
+            Cloudify focuses on the operational pieces teams need first: secure
+            key setup, reliable file handling, and fast link reuse.
           </p>
         </div>
       </div>

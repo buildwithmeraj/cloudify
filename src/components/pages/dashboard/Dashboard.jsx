@@ -4,6 +4,13 @@ import { useAuth } from "@/context/AuthContext";
 import api from "@/lib/api";
 import Link from "next/link";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  FiBookOpen,
+  FiFolder,
+  FiKey,
+  FiRefreshCw,
+  FiShield,
+} from "react-icons/fi";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -89,12 +96,12 @@ const Dashboard = () => {
   const recentFiles = useMemo(() => files.slice(0, 5), [files]);
 
   return (
-    <div className="w-full px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 space-y-6">
+    <div className="w-full px-4 pt-2 pb-8 sm:px-6 sm:pt-3 sm:pb-10 lg:px-8 lg:pt-4 lg:pb-12 space-y-6">
       <section className="rounded-3xl border border-base-300 bg-base-100 p-5 sm:p-8 lg:p-10">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h1 className="text-2xl font-black leading-tight text-base-content sm:text-4xl">
-              Welcome back{user?.name ? `, ${user.name}` : ""}.
+              Welcome back{user?.name ? `, ${user.name}` : ""}
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-base-content/70 sm:text-base">
               Manage API keys, monitor file activity, and jump into Cloudinary
@@ -113,7 +120,10 @@ const Dashboard = () => {
                 Refreshing
               </>
             ) : (
-              "Refresh Data"
+              <>
+                <FiRefreshCw size={15} />
+                Refresh Data
+              </>
             )}
           </button>
         </div>
@@ -164,18 +174,24 @@ const Dashboard = () => {
       </section>
 
       <section className="rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm">
-        <h2 className="text-xl font-extrabold text-base-content">Quick Actions</h2>
+        <h2 className="text-xl font-extrabold text-base-content">
+          Quick Actions
+        </h2>
         <div className="mt-4 flex flex-wrap gap-3">
           <Link href="/dashboard/files/cloudinary" className="btn btn-primary">
+            <FiFolder size={15} />
             Open File Manager
           </Link>
           <Link href="/dashboard/keys/cloudinary" className="btn btn-outline">
+            <FiKey size={15} />
             Manage Cloudinary Keys
           </Link>
           <Link href="/dashboard/keys/public" className="btn btn-outline">
+            <FiShield size={15} />
             Manage Public Keys
           </Link>
           <Link href="/docs" className="btn btn-ghost">
+            <FiBookOpen size={15} />
             API Docs
           </Link>
         </div>
@@ -243,7 +259,8 @@ const Dashboard = () => {
                     {file.public_id || file.name || `File #${file.id}`}
                   </p>
                   <p className="text-xs text-base-content/60">
-                    {file.resource_type || "unknown"} • {formatBytes(file.bytes)}
+                    {file.resource_type || "unknown"} •{" "}
+                    {formatBytes(file.bytes)}
                   </p>
                 </div>
               ))}

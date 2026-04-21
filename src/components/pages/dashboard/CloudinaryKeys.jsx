@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FiEdit2, FiTrash2, FiCloud, FiCheck, FiX } from "react-icons/fi";
+import { FiEdit2, FiTrash2, FiCheck, FiX } from "react-icons/fi";
+import { SiCloudinary } from "react-icons/si";
 import api from "@/lib/api";
 import Link from "next/link";
 
@@ -82,14 +83,12 @@ const CloudinaryKeys = () => {
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="px-4 pt-2 pb-4 space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <div>
-          <FiCloud size={22} className="text-primary" />
-          <h2 className="text-xl font-bold text-base-content">
-            Cloudinary Accounts
-          </h2>
-        </div>
+        <h2 className="text-xl font-bold text-base-content">
+          <SiCloudinary size={22} className="text-primary inline mr-2 mb-0.5" />
+          Cloudinary Accounts
+        </h2>
         <Link href="/dashboard/keys/cloudinary/add">Add Key</Link>
       </div>
 

@@ -4,12 +4,16 @@ const Docs = () => {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       <div>
         <h1 className="text-3xl font-bold">Cloudify API Docs</h1>
         <p className="text-base-content/70 mt-2">
           Simple reference for the current backend at{" "}
           <span className="font-mono">{baseUrl}</span>.
+        </p>
+        <p className="text-base-content/70 mt-1 text-sm">
+          Platform direction is multi-provider media management. Current
+          production provider: Cloudinary.
         </p>
       </div>
 

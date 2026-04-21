@@ -81,12 +81,12 @@ const PublicKeys = () => {
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="px-4 pt-2 pb-4 space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <div>
-          <FiCloud size={22} className="text-primary" />
-          <h2 className="text-xl font-bold text-base-content">Public Keys</h2>
-        </div>
+        <h2 className="text-xl font-bold text-base-content">
+          <FiCloud size={22} className="text-primary inline mr-2 mb-0.5" />
+          Public Keys
+        </h2>
         <Link href="/dashboard/keys/public/add">Add Key</Link>
       </div>
 

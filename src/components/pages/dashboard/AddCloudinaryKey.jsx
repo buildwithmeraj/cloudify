@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FiCloud } from "react-icons/fi";
+import { SiCloudinary } from "react-icons/si";
 import api from "@/lib/api";
 
 function ErrorMsg({ message }) {
@@ -65,7 +65,7 @@ const AddCloudinaryKey = () => {
         <div className="bg-base-100 rounded-2xl border border-base-300 shadow-sm p-6 space-y-5">
           <div className="text-center space-y-2">
             <div className="flex justify-center gap-2 mb-6">
-              <FiCloud size={32} className="text-primary mt-0.5" />
+              <SiCloudinary size={32} className="text-primary mt-0.5" />
               <h2 className="text-3xl font-bold text-base-content">
                 Add Cloudinary API
               </h2>

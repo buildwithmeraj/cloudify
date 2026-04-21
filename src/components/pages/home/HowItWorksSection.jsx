@@ -2,22 +2,22 @@ const steps = [
   {
     title: "Create your account",
     description:
-      "Sign up and log in to access your private Cloudify dashboard.",
+      "Sign up once to get a private workspace where keys and files are isolated by user.",
   },
   {
     title: "Add your API keys",
     description:
-      "Store Cloudinary and public keys so uploads and API calls are ready.",
+      "Register Cloudinary credentials plus a public API key name pair used for file APIs.",
   },
   {
-    title: "Manage your files",
+    title: "Operate your media",
     description:
-      "Upload media, browse your assets, and keep your cloud library organized.",
+      "Upload, browse, preview, and bulk-delete media while keeping everything grouped by bucket name.",
   },
   {
-    title: "Deliver instantly",
+    title: "Ship with confidence",
     description:
-      "Use Cloudinary URLs in your apps, websites, emails, or client projects.",
+      "Use secure Cloudinary URLs directly in your apps, docs, and client projects with less manual work.",
   },
 ];
 
@@ -29,7 +29,9 @@ const HowItWorksSection = () => {
           How Cloudify Works
         </h2>
         <p className="mt-2 max-w-2xl text-base-content/70">
-          Follow this simple workflow to move from setup to production quickly.
+          The workflow is intentionally short: connect keys, run file actions,
+          and reuse URLs. This keeps onboarding fast for both solo devs and
+          teams.
         </p>
       </div>
 

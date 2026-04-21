@@ -2,25 +2,25 @@ const useCases = [
   {
     heading: "For Freelancers",
     points: [
-      "Keep client media organized",
-      "Share links without manual dashboard hopping",
-      "Ship projects faster with reusable assets",
+      "Keep each client’s media organized by key name and bucket",
+      "Share secure asset links without manual dashboard hopping",
+      "Ship websites faster with reusable media pipelines",
     ],
   },
   {
     heading: "For Product Teams",
     points: [
-      "Centralize API key and media operations",
-      "Create a repeatable upload workflow",
-      "Reduce confusion between dev and non-dev roles",
+      "Centralize key setup and media operations in one internal tool",
+      "Create repeatable upload/list/delete workflows across environments",
+      "Reduce handoff confusion between engineering and content teams",
     ],
   },
   {
     heading: "For Learners",
     points: [
-      "Understand auth, API usage, and cloud file handling",
-      "Practice real-world dashboard patterns",
-      "Use as a starter for larger media platforms",
+      "Learn practical auth and API key patterns used in real apps",
+      "Practice building dashboard UX around real backend contracts",
+      "Use it as a starter for multi-provider media platforms",
     ],
   },
 ];
@@ -32,8 +32,9 @@ const UseCasesSection = () => {
         Who Is It For?
       </h2>
       <p className="mt-2 max-w-2xl text-base-content/70">
-        Cloudify is designed for anyone who wants a simpler way to handle
-        Cloudinary media operations.
+        Cloudify is useful anywhere media workflows become repetitive and
+        error-prone. It gives structure to keys, uploads, and file lifecycle
+        actions.
       </p>
 
       <div className="mt-6 grid gap-4 md:grid-cols-3">

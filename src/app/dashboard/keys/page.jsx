@@ -3,6 +3,7 @@
 import api from "@/lib/api";
 import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
+import { FiKey, FiPlus, FiRefreshCw, FiShield } from "react-icons/fi";
 
 function maskKey(key) {
   if (!key) return "-";
@@ -38,7 +39,7 @@ const Page = () => {
   }, [loadData]);
 
   return (
-    <div className="w-full px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 space-y-6">
+    <div className="w-full px-4 pt-2 pb-8 sm:px-6 sm:pt-3 sm:pb-10 lg:px-8 lg:pt-4 lg:pb-12 space-y-6">
       <section className="rounded-3xl border border-base-300 bg-base-100 p-5 sm:p-8 lg:p-10">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -62,7 +63,10 @@ const Page = () => {
                 Refreshing
               </>
             ) : (
-              "Refresh Data"
+              <>
+                <FiRefreshCw size={15} />
+                Refresh Data
+              </>
             )}
           </button>
         </div>
@@ -84,9 +88,11 @@ const Page = () => {
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             <Link href="/dashboard/keys/cloudinary" className="btn btn-sm btn-primary">
+              <FiKey size={14} />
               Manage
             </Link>
             <Link href="/dashboard/keys/cloudinary/add" className="btn btn-sm btn-outline">
+              <FiPlus size={14} />
               Add New
             </Link>
           </div>
@@ -101,9 +107,11 @@ const Page = () => {
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             <Link href="/dashboard/keys/public" className="btn btn-sm btn-primary">
+              <FiShield size={14} />
               Manage
             </Link>
             <Link href="/dashboard/keys/public/add" className="btn btn-sm btn-outline">
+              <FiPlus size={14} />
               Add New
             </Link>
           </div>

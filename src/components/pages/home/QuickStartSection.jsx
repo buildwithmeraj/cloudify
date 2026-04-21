@@ -1,12 +1,25 @@
+"use client";
+
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
+import { FiBookOpen, FiFolder, FiKey, FiLogIn, FiUserPlus } from "react-icons/fi";
 
 const QuickStartSection = () => {
+  const { user, loading } = useAuth();
+  const isAuthenticated = Boolean(user);
+
   return (
-    <section className="mt-14 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+    <section className="mt-14">
       <article className="rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm">
         <h2 className="text-2xl font-extrabold text-base-content">
           2-Minute Quick Start
         </h2>
+        <p className="mt-2 max-w-3xl text-sm text-base-content/70 sm:text-base">
+          This is the fastest path from zero setup to working file APIs. If
+          you are onboarding a teammate, these are the same steps they should
+          follow to avoid auth and key mismatch issues. Current provider support
+          is Cloudinary.
+        </p>
         <ol className="mt-4 space-y-3 text-sm text-base-content/70">
           <li>
             <span className="font-semibold text-base-content">1.</span> Register or
@@ -25,27 +38,33 @@ const QuickStartSection = () => {
             generated links in your app or website.
           </li>
         </ol>
-      </article>
-
-      <article className="rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm">
-        <p className="text-xs font-semibold text-base-content/70">
-          Start Now
-        </p>
-        <h3 className="mt-2 text-2xl font-black text-base-content">
-          Ready to simplify media management?
-        </h3>
-        <p className="mt-2 text-sm text-base-content/70">
-          Create your account and get a clean Cloudinary workflow in minutes.
-        </p>
 
         <div className="mt-5 flex flex-wrap gap-3">
-          <Link href="/register" className="btn btn-neutral">
-            Create Account
-          </Link>
-          <Link href="/login" className="btn btn-outline">
-            Login
-          </Link>
+          {!loading && isAuthenticated ? (
+            <>
+              <Link href="/dashboard/keys" className="btn btn-neutral">
+                <FiKey size={15} />
+                Open Keys
+              </Link>
+              <Link href="/dashboard/files/cloudinary" className="btn btn-outline">
+                <FiFolder size={15} />
+                Open Files
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/register" className="btn btn-neutral">
+                <FiUserPlus size={15} />
+                Create Account
+              </Link>
+              <Link href="/login" className="btn btn-outline">
+                <FiLogIn size={15} />
+                Login
+              </Link>
+            </>
+          )}
           <Link href="/docs" className="btn btn-ghost">
+            <FiBookOpen size={15} />
             API Docs
           </Link>
         </div>

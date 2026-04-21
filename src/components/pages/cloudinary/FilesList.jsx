@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FiCloud, FiEye, FiImage, FiTrash2 } from "react-icons/fi";
+import { FiEye, FiImage, FiTrash2 } from "react-icons/fi";
+import { SiCloudinary } from "react-icons/si";
 import api from "@/lib/api";
 
 const FilesList = () => {
@@ -228,14 +229,12 @@ const FilesList = () => {
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="px-4 pt-2 pb-4 space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <div>
-          <FiCloud size={22} className="text-primary" />
-          <h2 className="text-xl font-bold text-base-content">
-            Cloudinary Files
-          </h2>
-        </div>
+        <h2 className="text-xl font-bold text-base-content">
+          <SiCloudinary size={22} className="text-primary inline mr-2 mb-0.5" />
+          Cloudinary Files
+        </h2>
         <button
           className="btn btn-error btn-sm"
           onClick={askDeleteSelected}

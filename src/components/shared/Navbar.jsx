@@ -3,30 +3,55 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { FaPowerOff } from "react-icons/fa6";
+import {
+  FiBookOpen,
+  FiFolder,
+  FiGrid,
+  FiHome,
+  FiKey,
+  FiLogIn,
+  FiUserPlus,
+} from "react-icons/fi";
 import { useAuth } from "@/context/AuthContext";
 import Logo from "../utilities/Logo";
 import ThemeSwitcher from "../utilities/ThemeSwitcher";
+import { usePathname } from "next/navigation";
+
+function isActive(pathname, href) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function getActiveHref(pathname, items) {
+  const matches = items
+    .map((item) => item.href)
+    .filter((href) => isActive(pathname, href))
+    .sort((a, b) => b.length - a.length);
+  return matches[0] || null;
+}
 
 const Navbar = () => {
   const { user, loading, logout } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const isAuthenticated = Boolean(user);
+  const pathname = usePathname();
 
   const guestItems = [
-    { href: "/", label: "Home" },
-    { href: "/docs", label: "Docs" },
-    { href: "/login", label: "Login" },
-    { href: "/register", label: "Register" },
+    { href: "/", label: "Home", icon: FiHome },
+    { href: "/docs", label: "Docs", icon: FiBookOpen },
+    { href: "/login", label: "Login", icon: FiLogIn },
+    { href: "/register", label: "Register", icon: FiUserPlus },
   ];
 
   const authItems = [
-    { href: "/dashboard", label: "Dashboard" },
-    { href: "/dashboard/files", label: "Files" },
-    { href: "/dashboard/keys", label: "Keys" },
-    { href: "/docs", label: "Docs" },
+    { href: "/dashboard", label: "Dashboard", icon: FiGrid },
+    { href: "/dashboard/files", label: "Files", icon: FiFolder },
+    { href: "/dashboard/keys", label: "Keys", icon: FiKey },
+    { href: "/docs", label: "Docs", icon: FiBookOpen },
   ];
 
   const navItems = isAuthenticated ? authItems : guestItems;
+  const activeHref = getActiveHref(pathname, navItems);
 
   const closeSidebar = () => setIsSidebarOpen(false);
 
@@ -37,11 +62,11 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar bg-base-100 shadow-sm">
+      <div className="navbar bg-base-200 shadow-sm px-2 md:px-5">
         <div className="navbar-start">
           <button
             type="button"
-            className="btn btn-ghost lg:hidden"
+            className="cursor-pointer mr-2 lg:hidden"
             aria-label="Open menu"
             onClick={() => setIsSidebarOpen(true)}
           >
@@ -68,11 +93,24 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             {!loading &&
-              navItems.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href}>{item.label}</Link>
-                </li>
-              ))}
+              navItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className={`${
+                        activeHref === item.href
+                          ? "bg-primary/90 text-white font-semibold"
+                          : "hover:bg-primary/50 hover:text-white hover:font-semibold"
+                      }`}
+                    >
+                      <Icon size={15} />
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
           </ul>
         </div>
 
@@ -82,7 +120,7 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={logout}
-                className="btn btn-sm btn-error btn-soft hover:text-white btn-circle"
+                className="btn btn-sm btn-error btn-active hover:text-white btn-circle"
               >
                 <FaPowerOff />
               </button>
@@ -127,16 +165,29 @@ const Navbar = () => {
 
           <ul className="menu w-full gap-1">
             {!loading &&
-              navItems.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} onClick={closeSidebar}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              navItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={closeSidebar}
+                      className={`${
+                        activeHref === item.href
+                          ? "bg-primary/90 text-white font-semibold"
+                          : ""
+                      }`}
+                    >
+                      <Icon size={15} />
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
             {!loading && isAuthenticated && (
               <li>
                 <button type="button" onClick={handleLogout}>
+                  <FaPowerOff size={15} />
                   Logout
                 </button>
               </li>
