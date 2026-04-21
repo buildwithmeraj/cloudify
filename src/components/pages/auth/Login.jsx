@@ -68,7 +68,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[80dvh] flex items-center justify-center p-4">
+    <div className="min-h-[85dvh] flex items-center justify-center p-4">
       <div className="min-w-sm max-w-md space-y-4">
         <div className="bg-base-100 rounded-2xl border border-base-300 shadow-sm p-6 space-y-5">
           <div className="text-center space-y-2">

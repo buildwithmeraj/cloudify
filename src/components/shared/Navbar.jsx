@@ -11,6 +11,7 @@ import {
   FiKey,
   FiLogIn,
   FiUserPlus,
+  FiMail,
 } from "react-icons/fi";
 import { useAuth } from "@/context/AuthContext";
 import Logo from "../utilities/Logo";
@@ -41,6 +42,12 @@ const Navbar = () => {
     { href: "/docs", label: "Docs", icon: FiBookOpen },
     { href: "/login", label: "Login", icon: FiLogIn },
     { href: "/register", label: "Register", icon: FiUserPlus },
+    {
+      href: "https://meraj.pro/contact",
+      label: "Contact",
+      icon: FiMail,
+      external: true,
+    },
   ];
 
   const authItems = [
@@ -102,8 +109,9 @@ const Navbar = () => {
                       className={`${
                         activeHref === item.href
                           ? "bg-primary/90 text-white font-semibold"
-                          : "hover:bg-primary/50 hover:text-white hover:font-semibold"
+                          : "hover:bg-primary/40"
                       }`}
+                      target={`${item.external ? "_blank" : ""}`}
                     >
                       <Icon size={15} />
                       {item.label}
@@ -177,6 +185,7 @@ const Navbar = () => {
                           ? "bg-primary/90 text-white font-semibold"
                           : ""
                       }`}
+                      target={`${item.external ? "_blank" : ""}`}
                     >
                       <Icon size={15} />
                       {item.label}
