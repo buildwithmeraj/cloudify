@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# <img src="public/icon.svg" alt="Cloudify" width="36" style="vertical-align: middle;" /> Cloudify
 
-## Getting Started
+Cloudify is a media management dashboard built with Next.js.
+It is designed to support multiple file providers, with **Cloudinary supported currently**.
 
-First, run the development server:
+## Live URL
+
+- https://cloudify.meraj.pro
+
+## Backend Repo
+
+- https://github.com/buildwithmeraj/cloudify-api
+
+## Features
+
+- Authentication (register, login, logout)
+- Dashboard overview with key and file activity
+- Cloudinary key management
+- Public key management
+- Cloudinary file listing, preview, single/multi delete
+- API documentation page
+- Responsive navigation with active route highlighting
+
+## Provider Support
+
+- Cloudinary: **Available now**
+- Cloudflare R2: Planned
+- Amazon S3: Planned
+
+## Tech Stack
+
+- Next.js (App Router)
+- React
+- Tailwind CSS + DaisyUI
+- Axios
+- next-themes
+- react-icons
+
+## Prerequisites
+
+- Node.js 18+ (recommended)
+- npm
+- A running Cloudify API backend
+
+## Installation
+
+```bash
+npm install
+```
+
+## Environment Variables
+
+Create `.env.local` in project root:
+
+```bash
+NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
+```
+
+Use your backend API base URL in production.
+
+## Run Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Build & Start
 
-## Learn More
+```bash
+npm run build
+npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Useful Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `npm run dev` - start development server
+- `npm run build` - production build
+- `npm run start` - run production server
+- `npm run lint` - run ESLint
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Main Routes
 
-## Deploy on Vercel
+- `/` - Home
+- `/docs` - API docs
+- `/login` - Login
+- `/register` - Register
+- `/dashboard` - Dashboard
+- `/dashboard/files` - File providers
+- `/dashboard/files/cloudinary` - Cloudinary files
+- `/dashboard/keys` - Keys hub
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- The app is provider-ready by design.
+- Current production file workflow is Cloudinary.
