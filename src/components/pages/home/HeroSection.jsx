@@ -23,6 +23,9 @@ const HeroSection = () => {
           >
             Open File Manager
           </Link>
+          <Link href="/docs" className="btn btn-ghost w-full sm:w-auto">
+            Read API Docs
+          </Link>
         </div>
 
         <div className="mt-6 grid gap-2 text-sm text-base-content/70 sm:flex sm:flex-wrap sm:gap-5">

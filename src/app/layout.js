@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
             <header>
               <Navbar />
             </header>
-            <main className="grow max-w-7xl and mx-auto">{children}</main>
+            <main className="grow w-full max-w-7xl mx-auto">{children}</main>
             <Footer />
           </AuthProvider>
         </Providers>

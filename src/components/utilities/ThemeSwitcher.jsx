@@ -73,13 +73,18 @@ const StyledWrapper = styled.div`
   .toggle-slot {
     font-size: 10px;
     position: relative;
-    height: 3.5em;
-    width: 7em;
+    height: 3em;
+    width: 6em;
     overflow: hidden;
     border: 0px solid transparent;
     border-radius: 10em;
     background-color: #b5b5b5;
     transition: background-color 250ms;
+  }
+
+  .toggle-checkbox:focus-visible ~ .toggle-slot {
+    outline: 2px solid hsl(var(--p));
+    outline-offset: 2px;
   }
 
   .toggle-checkbox:checked ~ .toggle-slot {
@@ -89,8 +94,8 @@ const StyledWrapper = styled.div`
   .toggle-button {
     transform: translate(0.3em, 0.25em);
     position: absolute;
-    height: 3em;
-    width: 3em;
+    height: 2.5em;
+    width: 2.5em;
     border-radius: 50%;
     background-color: #ffeccf;
     box-shadow: inset 0px 0px 0px 0.75em #ffbb52;
@@ -103,22 +108,22 @@ const StyledWrapper = styled.div`
   .toggle-checkbox:checked ~ .toggle-slot .toggle-button {
     background-color: #485367;
     box-shadow: inset 0px 0px 0px 0.75em white;
-    transform: translate(3.65em, 0.25em);
+    transform: translate(3.2em, 0.25em);
   }
 
   .sun-icon {
     position: absolute;
-    height: 6em;
-    width: 6em;
+    height: 5em;
+    width: 5em;
     color: #ffbb52;
   }
 
   .sun-icon-wrapper {
     position: absolute;
-    height: 6em;
-    width: 6em;
+    height: 5em;
+    width: 5em;
     opacity: 1;
-    transform: translate(2em, 2em) rotate(15deg);
+    transform: translate(1.65em, 2.15em) rotate(15deg);
     transform-origin: 50% 50%;
     transition:
       opacity 150ms,
@@ -127,22 +132,22 @@ const StyledWrapper = styled.div`
 
   .toggle-checkbox:checked ~ .toggle-slot .sun-icon-wrapper {
     opacity: 0;
-    transform: translate(3em, 2em) rotate(0deg);
+    transform: translate(2.55em, 2.15em) rotate(0deg);
   }
 
   .moon-icon {
     position: absolute;
-    height: 6em;
-    width: 6em;
+    height: 5em;
+    width: 5em;
     color: white;
   }
 
   .moon-icon-wrapper {
     position: absolute;
-    height: 6em;
-    width: 6em;
+    height: 5em;
+    width: 5em;
     opacity: 0;
-    transform: translate(11em, 2em) rotate(0deg);
+    transform: translate(9.5em, 2.15em) rotate(0deg);
     transform-origin: 50% 50%;
     transition:
       opacity 150ms,
@@ -151,7 +156,7 @@ const StyledWrapper = styled.div`
 
   .toggle-checkbox:checked ~ .toggle-slot .moon-icon-wrapper {
     opacity: 1;
-    transform: translate(2em, 2em) rotate(-15deg);
+    transform: translate(1.65em, 2.15em) rotate(-15deg);
   }
 `;
 

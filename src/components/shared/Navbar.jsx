@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
+import { FaPowerOff } from "react-icons/fa6";
+import { useAuth } from "@/context/AuthContext";
 import Logo from "../utilities/Logo";
 import ThemeSwitcher from "../utilities/ThemeSwitcher";
-import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
-import { FaPowerOff } from "react-icons/fa6";
 
 const Navbar = () => {
   const { user, loading, logout } = useAuth();
@@ -14,17 +14,20 @@ const Navbar = () => {
 
   const guestItems = [
     { href: "/", label: "Home" },
+    { href: "/docs", label: "Docs" },
     { href: "/login", label: "Login" },
     { href: "/register", label: "Register" },
   ];
 
   const authItems = [
     { href: "/dashboard", label: "Dashboard" },
-    { href: "/dashboard/files/cloudinary", label: "Cloudinary Files" },
+    { href: "/dashboard/files", label: "Files" },
     { href: "/dashboard/keys", label: "Keys" },
+    { href: "/docs", label: "Docs" },
   ];
 
   const navItems = isAuthenticated ? authItems : guestItems;
+
   const closeSidebar = () => setIsSidebarOpen(false);
 
   const handleLogout = async () => {
@@ -49,19 +52,19 @@ const Navbar = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              {" "}
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
                 d="M4 6h16M4 12h8m-8 6h16"
-              />{" "}
+              />
             </svg>
           </button>
-          <Link className="" href="/">
+          <Link href="/">
             <Logo />
           </Link>
         </div>
+
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             {!loading &&
@@ -72,6 +75,7 @@ const Navbar = () => {
               ))}
           </ul>
         </div>
+
         <div className="navbar-end gap-4">
           {!loading && isAuthenticated && (
             <div className="tooltip tooltip-bottom" data-tip="Logout">
@@ -89,16 +93,23 @@ const Navbar = () => {
       </div>
 
       <div
-        className={`fixed inset-0 z-50 lg:hidden ${isSidebarOpen ? "visible" : "invisible pointer-events-none"}`}
+        className={`fixed inset-0 z-50 lg:hidden ${
+          isSidebarOpen ? "visible" : "invisible pointer-events-none"
+        }`}
       >
         <button
           type="button"
-          className={`absolute inset-0 bg-black/40 transition-opacity ${isSidebarOpen ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 bg-black/40 transition-opacity ${
+            isSidebarOpen ? "opacity-100" : "opacity-0"
+          }`}
           aria-label="Close menu overlay"
           onClick={closeSidebar}
         />
+
         <aside
-          className={`absolute left-0 top-0 h-full w-72 max-w-[85vw] bg-base-100 p-4 shadow-xl transition-transform duration-300 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+          className={`absolute left-0 top-0 h-full w-72 max-w-[85vw] bg-base-100 p-4 shadow-xl transition-transform duration-300 ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
         >
           <div className="mb-4 flex items-center justify-between">
             <Link href="/" onClick={closeSidebar}>

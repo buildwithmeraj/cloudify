@@ -45,6 +45,9 @@ const QuickStartSection = () => {
           <Link href="/login" className="btn btn-outline">
             Login
           </Link>
+          <Link href="/docs" className="btn btn-ghost">
+            API Docs
+          </Link>
         </div>
       </article>
     </section>
