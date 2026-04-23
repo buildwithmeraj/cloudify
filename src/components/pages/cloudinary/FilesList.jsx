@@ -4,6 +4,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FiEye, FiImage, FiTrash2 } from "react-icons/fi";
 import { SiCloudinary } from "react-icons/si";
 import api from "@/lib/api";
+import Loader from "@/components/utilities/Loader";
+import ErrorModal from "@/components/utilities/ErrorModal";
+import SuccessModal from "@/components/utilities/SuccessModal";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { MdOutlineCancel } from "react-icons/md";
+import { FaCheckCircle } from "react-icons/fa";
 
 const FilesList = () => {
   const [files, setFiles] = useState([]);
@@ -228,6 +234,8 @@ const FilesList = () => {
     }
   };
 
+  if (loading) return <Loader />;
+
   return (
     <div className="px-4 pt-2 pb-4 space-y-4">
       <div className="flex items-center justify-between mb-2">
@@ -249,17 +257,9 @@ const FilesList = () => {
         </button>
       </div>
 
-      {error && (
-        <div className="alert alert-error text-sm py-2">
-          <span>{error}</span>
-        </div>
-      )}
+      {error && <ErrorModal message={error} />}
 
-      {success && (
-        <div className="alert alert-success text-sm py-2">
-          <span>{success}</span>
-        </div>
-      )}
+      {success && <SuccessModal message={success} />}
 
       <div className="overflow-x-auto rounded-xl border border-base-300">
         <table className="table table-zebra w-full">
@@ -284,14 +284,6 @@ const FilesList = () => {
             </tr>
           </thead>
           <tbody>
-            {loading && (
-              <tr>
-                <td colSpan={8} className="text-center py-8">
-                  <span className="loading loading-spinner loading-md text-primary" />
-                </td>
-              </tr>
-            )}
-
             {!loading && files.length === 0 && (
               <tr>
                 <td
@@ -379,18 +371,27 @@ const FilesList = () => {
 
       <div className={`modal ${deleteTargetIds.length ? "modal-open" : ""}`}>
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Confirm Delete</h3>
-          <p className="py-4">
+          <h3 className="font-bold text-xl text-center">Confirm Delete</h3>
+          <div className="flex items-center justify-center mt-4">
+            <DotLottieReact
+              src="https://lottie.host/e2f957e8-68c9-4dc2-b263-9d4c9a784a99/Sh2ter556t.lottie"
+              loop
+              autoplay
+              className="max-w-xs"
+            />
+          </div>
+          <p className="pt-4 text-center text-warning">
             {deleteTargetIds.length === 1
               ? "Are you sure you want to delete this file? This action cannot be undone."
               : `Are you sure you want to delete ${deleteTargetIds.length} files? This action cannot be undone.`}
           </p>
           <div className="modal-action">
             <button
-              className="btn btn-ghost"
+              className="btn btn-info btn-soft"
               onClick={closeDeleteModal}
               disabled={isDeleting}
             >
+              <MdOutlineCancel size={16} />
               Cancel
             </button>
             <button
@@ -398,6 +399,7 @@ const FilesList = () => {
               onClick={handleDelete}
               disabled={isDeleting}
             >
+              <FaCheckCircle />
               {isDeleting ? (
                 <span className="loading loading-spinner loading-xs" />
               ) : (
@@ -414,7 +416,7 @@ const FilesList = () => {
         onClose={() => setPreviewFile(null)}
       >
         <div className="modal-box max-w-4xl">
-          <h3 className="font-bold text-lg mb-3">Preview</h3>
+          <h3 className="font-bold text-xl mb-3">Preview</h3>
           {previewFile?.resource_type === "video" ? (
             <video
               src={previewFile?.secure_url}

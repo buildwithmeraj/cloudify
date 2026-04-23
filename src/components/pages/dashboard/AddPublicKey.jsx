@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { FiCloud } from "react-icons/fi";
+import { FiCloud, FiGrid, FiKey } from "react-icons/fi";
 import api from "@/lib/api";
+import { FaPlus } from "react-icons/fa6";
+import ErrorModal from "@/components/utilities/ErrorModal";
+import SuccessModal from "@/components/utilities/SuccessModal";
 
 function ErrorMsg({ message }) {
   return (
@@ -23,10 +25,7 @@ function InfoMsg({ message }) {
 }
 
 const AddPublicKey = () => {
-  const router = useRouter();
-
   const [cloudName, setCloudName] = useState("");
-  const [apiKey, setApiKey] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -42,7 +41,6 @@ const AddPublicKey = () => {
         name: cloudName,
       });
       setSuccess("Public API key added successfully.");
-      setTimeout(() => router.replace("/dashboard"), 1000);
     } catch (err) {
       const errors = err.response?.data?.errors;
       if (errors) {
@@ -69,8 +67,13 @@ const AddPublicKey = () => {
             </div>
           </div>
 
-          {error && <ErrorMsg message={error} />}
-          {success && <InfoMsg message={success} />}
+          {error && <ErrorModal message={error} />}
+          {success && (
+            <SuccessModal
+              message={success}
+              link={["Public Keys", "/dashboard/keys/public"]}
+            />
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex flex-col gap-1.5">
@@ -93,6 +96,7 @@ const AddPublicKey = () => {
               className="btn btn-primary w-full text-white font-semibold text-base disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isLoading}
             >
+              <FaPlus />
               {isLoading ? (
                 <>
                   <span className="loading loading-spinner loading-sm" />
@@ -106,16 +110,18 @@ const AddPublicKey = () => {
 
           <div className="divider my-3 text-xs text-base-content/50">OR</div>
 
-          <div className="text-center">
-            <p className="text-sm text-base-content/70">
-              Already added one?{" "}
-              <Link
-                href="/dashboard"
-                className="link link-primary font-semibold"
-              >
-                Dashboard
-              </Link>
-            </p>
+          <div className="text-center flex items-center gap-2">
+            <Link href="/dashboard" className="btn btn-secondary">
+              <FiGrid />
+              Dashboard
+            </Link>
+            <Link
+              href="/dashboard/keys/public"
+              className="btn btn-secondary flex-1"
+            >
+              <FiKey />
+              Public Keys
+            </Link>
           </div>
         </div>
       </div>

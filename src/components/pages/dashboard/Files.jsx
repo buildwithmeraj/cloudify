@@ -6,6 +6,8 @@ import { useCallback, useEffect, useState } from "react";
 import { FiRefreshCw, FiSettings } from "react-icons/fi";
 import { SiCloudflare, SiCloudinary } from "react-icons/si";
 import { FaAws } from "react-icons/fa";
+import Loader from "@/components/utilities/Loader";
+import ErrorModal from "@/components/utilities/ErrorModal";
 
 const providers = [
   {
@@ -72,6 +74,8 @@ const Files = () => {
 
   const cloudinaryReady = cloudinaryKeysCount > 0 && publicKeysCount > 0;
 
+  if (loading) return <Loader />;
+
   return (
     <div className="w-full px-4 pt-2 pb-8 sm:px-6 sm:pt-3 sm:pb-10 lg:px-8 lg:pt-4 lg:pb-12 space-y-6">
       <section className="rounded-3xl border border-base-300 bg-base-100 p-5 sm:p-8 lg:p-10">
@@ -91,26 +95,13 @@ const Files = () => {
             onClick={loadStatus}
             disabled={loading}
           >
-            {loading ? (
-              <>
-                <span className="loading loading-spinner loading-sm" />
-                Refreshing
-              </>
-            ) : (
-              <>
-                <FiRefreshCw size={15} />
-                Refresh Status
-              </>
-            )}
+            <FiRefreshCw size={15} />
+            Refresh Status
           </button>
         </div>
       </section>
 
-      {error && (
-        <div className="alert alert-error text-sm py-2">
-          <span>{error}</span>
-        </div>
-      )}
+      {error && <ErrorModal message={error} />}
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {providers.map((provider) => {

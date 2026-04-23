@@ -2,29 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { SiCloudinary } from "react-icons/si";
 import api from "@/lib/api";
-
-function ErrorMsg({ message }) {
-  return (
-    <div className="alert alert-error text-sm py-2">
-      <span>{message}</span>
-    </div>
-  );
-}
-
-function InfoMsg({ message }) {
-  return (
-    <div className="alert alert-info text-sm py-2">
-      <span>{message}</span>
-    </div>
-  );
-}
+import ErrorModal from "@/components/utilities/ErrorModal";
+import SuccessModal from "@/components/utilities/SuccessModal";
+import { FaPlus } from "react-icons/fa6";
+import { FiGrid, FiKey } from "react-icons/fi";
 
 const AddCloudinaryKey = () => {
-  const router = useRouter();
-
   const [cloudName, setCloudName] = useState("");
   const [apiKey, setApiKey] = useState("");
   const [apiSecret, setApiSecret] = useState("");
@@ -45,7 +30,6 @@ const AddCloudinaryKey = () => {
         secret: apiSecret,
       });
       setSuccess("Cloudinary account added successfully.");
-      setTimeout(() => router.replace("/dashboard/keys/cloudinary"), 1000);
     } catch (err) {
       const errors = err.response?.data?.errors;
       if (errors) {
@@ -72,8 +56,13 @@ const AddCloudinaryKey = () => {
             </div>
           </div>
 
-          {error && <ErrorMsg message={error} />}
-          {success && <InfoMsg message={success} />}
+          {error && <ErrorModal message={error} />}
+          {success && (
+            <SuccessModal
+              message={success}
+              link={["Cloudinary Keys", "/dashboard/keys/cloudinary"]}
+            />
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex flex-col gap-1.5">
@@ -126,6 +115,7 @@ const AddCloudinaryKey = () => {
               className="btn btn-primary w-full text-white font-semibold text-base disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isLoading}
             >
+              <FaPlus />
               {isLoading ? (
                 <>
                   <span className="loading loading-spinner loading-sm" />
@@ -139,16 +129,18 @@ const AddCloudinaryKey = () => {
 
           <div className="divider my-3 text-xs text-base-content/50">OR</div>
 
-          <div className="text-center">
-            <p className="text-sm text-base-content/70">
-              Already added one?{" "}
-              <Link
-                href="/dashboard"
-                className="link link-primary font-semibold"
-              >
-                Dashboard
-              </Link>
-            </p>
+          <div className="text-center flex items-center gap-2">
+            <Link href="/dashboard" className="btn btn-secondary">
+              <FiGrid />
+              Dashboard
+            </Link>
+            <Link
+              href="/dashboard/keys/cloudinary"
+              className="btn btn-secondary flex-1"
+            >
+              <FiKey />
+              Cloudinary Keys
+            </Link>
           </div>
         </div>
       </div>

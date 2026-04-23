@@ -1,28 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FiLogIn, FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { FaSignInAlt, FaGoogle } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
 import api from "@/lib/api";
-
-function ErrorMsg({ message }) {
-  return (
-    <div className="alert alert-error text-sm py-2">
-      <span>{message}</span>
-    </div>
-  );
-}
-
-function InfoMsg({ message }) {
-  return (
-    <div className="alert alert-info text-sm py-2">
-      <span>{message}</span>
-    </div>
-  );
-}
+import ErrorMsg from "@/components/utilities/Error";
+import SuccessModal from "@/components/utilities/SuccessModal";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -34,14 +20,24 @@ export default function LoginPage() {
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const redirectTimeoutRef = useRef(null);
 
   const emailError = emailTouched && !email ? "Email is required" : "";
   const passwordError =
     passwordTouched && password.length > 0 && password.length < 8
       ? "Password must be at least 8 characters"
       : "";
+
+  useEffect(() => {
+    return () => {
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleCredentialsLogin = async (e) => {
     e.preventDefault();
@@ -51,7 +47,10 @@ export default function LoginPage() {
     try {
       const res = await api.post("/api/auth/login", { email, password });
       await login(res.data.token);
-      router.replace("/dashboard");
+      setSuccessMessage("Login successful. Redirecting to dashboard...");
+      redirectTimeoutRef.current = setTimeout(() => {
+        router.replace("/dashboard");
+      }, 3000);
     } catch (err) {
       setError(err.response?.data?.message || "Invalid credentials.");
     } finally {
@@ -70,6 +69,13 @@ export default function LoginPage() {
   return (
     <div className="min-h-[85dvh] flex items-center justify-center p-4">
       <div className="min-w-sm max-w-md space-y-4">
+        {successMessage && (
+          <SuccessModal
+            title="Login Successful"
+            message={successMessage}
+            link={["Dashboard", "/dashboard"]}
+          />
+        )}
         <div className="bg-base-100 rounded-2xl border border-base-300 shadow-sm p-6 space-y-5">
           <div className="text-center space-y-2">
             <div className="flex justify-center gap-2 mb-6">
@@ -142,7 +148,11 @@ export default function LoginPage() {
               type="submit"
               className="btn btn-primary w-full text-white font-semibold text-base disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={
-                isLoading || isGoogleLoading || !!emailError || !!passwordError
+                isLoading ||
+                isGoogleLoading ||
+                !!successMessage ||
+                !!emailError ||
+                !!passwordError
               }
             >
               <FaSignInAlt />

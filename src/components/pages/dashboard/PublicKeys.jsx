@@ -4,6 +4,12 @@ import { useEffect, useState } from "react";
 import { FiEdit2, FiTrash2, FiCloud, FiCheck, FiX } from "react-icons/fi";
 import api from "@/lib/api";
 import Link from "next/link";
+import Loader from "@/components/utilities/Loader";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { FaCheckCircle } from "react-icons/fa";
+import { MdOutlineCancel } from "react-icons/md";
+import ErrorModal from "@/components/utilities/ErrorModal";
+import SuccessModal from "@/components/utilities/SuccessModal";
 
 function maskKey(key) {
   if (!key) return "";
@@ -14,6 +20,7 @@ const PublicKeys = () => {
   const [publicKeys, setPublicKeys] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   // edit state
   const [editingId, setEditingId] = useState(null);
@@ -60,6 +67,7 @@ const PublicKeys = () => {
       if (editKey) payload.api_key = editKey;
       await api.put(`/api/keys/public/${id}`, payload);
       await getPublicKeys();
+      setSuccess("Cloudinary account updated successfully");
       cancelEdit();
     } catch (err) {
       setError(err.response?.data?.message || "Update failed.");
@@ -73,12 +81,15 @@ const PublicKeys = () => {
     try {
       await api.delete(`/api/keys/public/${id}`);
       setPublicKeys((prev) => prev.filter((k) => k.id !== id));
+      setSuccess("Cloudinary account deleted successfully");
     } catch (err) {
       setError(err.response?.data?.message || "Delete failed.");
     } finally {
       setDeletingId(null);
     }
   };
+
+  if (loading) return <Loader />;
 
   return (
     <div className="px-4 pt-2 pb-4 space-y-4">
@@ -90,10 +101,12 @@ const PublicKeys = () => {
         <Link href="/dashboard/keys/public/add">Add Key</Link>
       </div>
 
-      {error && (
-        <div className="alert alert-error text-sm py-2">
-          <span>{error}</span>
-        </div>
+      {error && <ErrorModal message={error} />}
+      {success && (
+        <SuccessModal
+          message={success}
+          link={["Cloudinary Keys", "/dashboard/keys/cloudinary"]}
+        />
       )}
 
       <div className="overflow-x-auto rounded-xl border border-base-300">
@@ -107,14 +120,6 @@ const PublicKeys = () => {
             </tr>
           </thead>
           <tbody>
-            {loading && (
-              <tr>
-                <td colSpan={4} className="text-center py-8">
-                  <span className="loading loading-spinner loading-md text-primary" />
-                </td>
-              </tr>
-            )}
-
             {!loading && publicKeys.length === 0 && (
               <tr>
                 <td
@@ -210,19 +215,27 @@ const PublicKeys = () => {
         </table>
       </div>
 
-      {/* Delete Confirmation Modal */}
       <div className={`modal ${confirmDeleteId ? "modal-open" : ""}`}>
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Confirm Delete</h3>
-          <p className="py-4">
+          <h3 className="font-bold text-xl text-center">Confirm Delete</h3>
+          <div className="flex items-center justify-center mt-4">
+            <DotLottieReact
+              src="https://lottie.host/e2f957e8-68c9-4dc2-b263-9d4c9a784a99/Sh2ter556t.lottie"
+              loop
+              autoplay
+              className="max-w-xs"
+            />
+          </div>
+          <p className="pt-4 text-center text-warning">
             Are you sure you want to delete this public key? This action cannot
             be undone.
           </p>
           <div className="modal-action">
             <button
-              className="btn btn-ghost"
+              className="btn btn-info btn-soft"
               onClick={() => setConfirmDeleteId(null)}
             >
+              <MdOutlineCancel size={16} />
               Cancel
             </button>
             <button
@@ -233,6 +246,7 @@ const PublicKeys = () => {
               }}
               disabled={deletingId === confirmDeleteId}
             >
+              <FaCheckCircle />
               {deletingId === confirmDeleteId ? (
                 <span className="loading loading-spinner loading-xs" />
               ) : (

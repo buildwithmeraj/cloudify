@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -14,14 +14,8 @@ import {
 import { FaGoogle } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
 import api from "@/lib/api";
-
-function ErrorMsg({ message }) {
-  return (
-    <div className="alert alert-error text-sm py-2">
-      <span>{message}</span>
-    </div>
-  );
-}
+import ErrorMsg from "@/components/utilities/Error";
+import SuccessModal from "@/components/utilities/SuccessModal";
 
 export default function RegisterPage() {
   const { login } = useAuth();
@@ -41,8 +35,10 @@ export default function RegisterPage() {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const redirectTimeoutRef = useRef(null);
 
   const nameError = nameTouched && !name ? "Name is required" : "";
   const emailError = emailTouched && !email ? "Email is required" : "";
@@ -54,6 +50,14 @@ export default function RegisterPage() {
     confirmTouched && confirmPassword !== password
       ? "Passwords do not match"
       : "";
+
+  useEffect(() => {
+    return () => {
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,7 +72,12 @@ export default function RegisterPage() {
         password_confirmation: confirmPassword,
       });
       await login(res.data.token);
-      router.replace("/dashboard");
+      setSuccessMessage(
+        "Account created successfully. Redirecting to dashboard...",
+      );
+      redirectTimeoutRef.current = setTimeout(() => {
+        router.replace("/dashboard");
+      }, 3000);
     } catch (err) {
       const errors = err.response?.data?.errors;
       if (errors) {
@@ -93,6 +102,13 @@ export default function RegisterPage() {
   return (
     <div className="min-h-[85dvh] flex items-center justify-center p-4">
       <div className="min-w-sm max-w-md space-y-4">
+        {successMessage && (
+          <SuccessModal
+            title="Registration Successful"
+            message={successMessage}
+            link={["Dashboard", "/dashboard"]}
+          />
+        )}
         <div className="bg-base-100 rounded-2xl border border-base-300 shadow-sm p-6 space-y-5">
           <div className="text-center space-y-2">
             <div className="flex justify-center gap-2 mb-6">
@@ -222,6 +238,7 @@ export default function RegisterPage() {
               disabled={
                 isLoading ||
                 isGoogleLoading ||
+                !!successMessage ||
                 !!nameError ||
                 !!emailError ||
                 !!passwordError ||

@@ -1,5 +1,7 @@
 "use client";
 
+import ErrorModal from "@/components/utilities/ErrorModal";
+import Loader from "@/components/utilities/Loader";
 import api from "@/lib/api";
 import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
@@ -38,6 +40,8 @@ const AllKeys = () => {
     loadData();
   }, [loadData]);
 
+  if (loading) return <Loader />;
+
   return (
     <div className="w-full px-4 pt-2 pb-8 sm:px-6 sm:pt-3 sm:pb-10 lg:px-8 lg:pt-4 lg:pb-12 space-y-6">
       <section className="rounded-3xl border border-base-300 bg-base-100 p-5 sm:p-8 lg:p-10">
@@ -72,11 +76,7 @@ const AllKeys = () => {
         </div>
       </section>
 
-      {error && (
-        <div className="alert alert-error text-sm py-2">
-          <span>{error}</span>
-        </div>
-      )}
+      {error && <ErrorModal message={error} />}
 
       <section className="grid gap-4 sm:grid-cols-2">
         <article className="rounded-2xl border border-base-300 bg-base-100 p-5 shadow-sm">
@@ -116,7 +116,7 @@ const AllKeys = () => {
               href="/dashboard/keys/public"
               className="btn btn-sm btn-primary"
             >
-              <FiShield size={14} />
+              <FiKey size={14} />
               Manage
             </Link>
             <Link
@@ -197,12 +197,6 @@ const AllKeys = () => {
               <p className="text-sm text-base-content/50">
                 No public keys yet.
               </p>
-            )}
-
-            {loading && (
-              <div className="py-5 text-center">
-                <span className="loading loading-spinner loading-sm text-primary" />
-              </div>
             )}
           </div>
         </article>

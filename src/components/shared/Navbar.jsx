@@ -51,6 +51,7 @@ const Navbar = () => {
   ];
 
   const authItems = [
+    { href: "/", label: "Home", icon: FiHome },
     { href: "/dashboard", label: "Dashboard", icon: FiGrid },
     { href: "/dashboard/files", label: "Files", icon: FiFolder },
     { href: "/dashboard/keys", label: "Keys", icon: FiKey },

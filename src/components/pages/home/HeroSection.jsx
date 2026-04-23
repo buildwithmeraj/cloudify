@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
-import { FiBookOpen, FiFolder, FiGrid, FiKey, FiLogIn, FiUserPlus } from "react-icons/fi";
+import {
+  FiBookOpen,
+  FiFolder,
+  FiGrid,
+  FiKey,
+  FiLogIn,
+  FiUserPlus,
+} from "react-icons/fi";
 
 const HeroSection = () => {
   const { user, loading } = useAuth();
@@ -23,35 +30,47 @@ const HeroSection = () => {
         <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center">
           {!loading && isAuthenticated ? (
             <>
-              <Link href="/dashboard" className="btn btn-primary w-full sm:w-auto">
+              <Link
+                href="/dashboard"
+                className="btn btn-primary w-full sm:w-auto"
+              >
                 <FiGrid size={15} />
                 Open Dashboard
               </Link>
               <Link
                 href="/dashboard/files/cloudinary"
-                className="btn btn-outline w-full sm:w-auto"
+                className="btn btn-secondary w-full sm:w-auto"
               >
                 <FiFolder size={15} />
                 Open File Manager
               </Link>
-              <Link href="/dashboard/keys" className="btn btn-outline w-full sm:w-auto">
+              <Link
+                href="/dashboard/keys"
+                className="btn btn-accent w-full sm:w-auto"
+              >
                 <FiKey size={15} />
                 Manage Keys
               </Link>
             </>
           ) : (
             <>
-              <Link href="/register" className="btn btn-primary w-full sm:w-auto">
+              <Link
+                href="/register"
+                className="btn btn-primary w-full sm:w-auto"
+              >
                 <FiUserPlus size={15} />
                 Get Started Free
               </Link>
-              <Link href="/login" className="btn btn-outline w-full sm:w-auto">
+              <Link
+                href="/login"
+                className="btn btn-secondary w-full sm:w-auto"
+              >
                 <FiLogIn size={15} />
                 Login
               </Link>
             </>
           )}
-          <Link href="/docs" className="btn btn-ghost w-full sm:w-auto">
+          <Link href="/docs" className="btn btn-info w-full sm:w-auto">
             <FiBookOpen size={15} />
             Read API Docs
           </Link>

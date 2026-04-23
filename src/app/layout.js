@@ -4,6 +4,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import { Montserrat } from "next/font/google";
 import Providers from "./providers/Providers";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "Cloudify",
@@ -12,7 +13,7 @@ export const metadata = {
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "700"], // Specify weights or use "variable" for variable fonts
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
               <Navbar />
             </header>
             <main className="grow w-full max-w-7xl mx-auto">{children}</main>
+            <Toaster position="bottom-center" reverseOrder={false} />
             <Footer />
           </AuthProvider>
         </Providers>

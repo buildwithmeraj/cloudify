@@ -5,6 +5,12 @@ import { FiEdit2, FiTrash2, FiCheck, FiX } from "react-icons/fi";
 import { SiCloudinary } from "react-icons/si";
 import api from "@/lib/api";
 import Link from "next/link";
+import Loader from "@/components/utilities/Loader";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { MdOutlineCancel } from "react-icons/md";
+import { FaCheckCircle } from "react-icons/fa";
+import ErrorModal from "@/components/utilities/ErrorModal";
+import SuccessModal from "@/components/utilities/SuccessModal";
 
 function maskKey(key) {
   if (!key) return "";
@@ -15,6 +21,7 @@ const CloudinaryKeys = () => {
   const [cloudinaryKeys, setCloudinaryKeys] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   // edit state
   const [editingId, setEditingId] = useState(null);
@@ -62,6 +69,7 @@ const CloudinaryKeys = () => {
       if (editKey) payload.api_key = editKey;
       await api.put(`/api/keys/cloudinary/${id}`, payload);
       await getCloudinaryKeys();
+      setSuccess("Cloudinary account updated successfully");
       cancelEdit();
     } catch (err) {
       setError(err.response?.data?.message || "Update failed.");
@@ -75,12 +83,15 @@ const CloudinaryKeys = () => {
     try {
       await api.delete(`/api/keys/cloudinary/${id}`);
       setCloudinaryKeys((prev) => prev.filter((k) => k.id !== id));
+      setSuccess("Cloudinary account deleted successfully");
     } catch (err) {
       setError(err.response?.data?.message || "Delete failed.");
     } finally {
       setDeletingId(null);
     }
   };
+
+  if (loading) return <Loader />;
 
   return (
     <div className="px-4 pt-2 pb-4 space-y-4">
@@ -92,11 +103,8 @@ const CloudinaryKeys = () => {
         <Link href="/dashboard/keys/cloudinary/add">Add Key</Link>
       </div>
 
-      {error && (
-        <div className="alert alert-error text-sm py-2">
-          <span>{error}</span>
-        </div>
-      )}
+      {error && <ErrorModal message={error} />}
+      {success && <SuccessModal message={success} />}
 
       <div className="overflow-x-auto rounded-xl border border-base-300">
         <table className="table table-zebra w-full">
@@ -110,14 +118,6 @@ const CloudinaryKeys = () => {
             </tr>
           </thead>
           <tbody>
-            {loading && (
-              <tr>
-                <td colSpan={4} className="text-center py-8">
-                  <span className="loading loading-spinner loading-md text-primary" />
-                </td>
-              </tr>
-            )}
-
             {!loading && cloudinaryKeys.length === 0 && (
               <tr>
                 <td
@@ -228,16 +228,25 @@ const CloudinaryKeys = () => {
 
       <div className={`modal ${confirmDeleteId ? "modal-open" : ""}`}>
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Confirm Delete</h3>
-          <p className="py-4">
+          <h3 className="font-bold text-xl text-center">Confirm Delete</h3>
+          <div className="flex items-center justify-center mt-4">
+            <DotLottieReact
+              src="https://lottie.host/e2f957e8-68c9-4dc2-b263-9d4c9a784a99/Sh2ter556t.lottie"
+              loop
+              autoplay
+              className="max-w-xs"
+            />
+          </div>
+          <p className="pt-4 text-center text-warning">
             Are you sure you want to delete this Cloudinary account? This action
             cannot be undone.
           </p>
           <div className="modal-action">
             <button
-              className="btn btn-ghost"
+              className="btn btn-info btn-soft"
               onClick={() => setConfirmDeleteId(null)}
             >
+              <MdOutlineCancel size={16} />
               Cancel
             </button>
             <button
@@ -248,6 +257,7 @@ const CloudinaryKeys = () => {
               }}
               disabled={deletingId === confirmDeleteId}
             >
+              <FaCheckCircle />
               {deletingId === confirmDeleteId ? (
                 <span className="loading loading-spinner loading-xs" />
               ) : (
